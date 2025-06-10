@@ -1,6 +1,6 @@
-package com.yourcompany.teebay.repository;
+package com.example.teebay.repository;
 
-import com.yourcompany.teebay.entity.User;
+import com.example.teebay.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
