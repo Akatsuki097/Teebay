@@ -1,5 +1,6 @@
 package com.example.teebay.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,19 +21,13 @@ import com.example.teebay.security.JwtAuthenticationFilter;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
-
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-    }
-
-    @Bean
+  @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
       // 1) Disable CSRF (if you’re stateless / using JWT)
       http.csrf(csrf -> csrf.disable());
 
       // 2) Add your JWT filter before the username/password filter
-      http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+     // http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
       // 3) Declare your authorization rules in one go
       http.authorizeHttpRequests(auth -> auth

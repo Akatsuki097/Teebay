@@ -1,9 +1,11 @@
 package com.example.teebay.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.teebay.entity.User;
 import com.example.teebay.repository.UserRepository;
+import com.example.teebay.security.JwtTokenUtil;
 import com.example.teebay.controller.AuthPayload;
 import com.example.teebay.controller.RegisterInput;
 
@@ -16,9 +18,11 @@ public class UserService {
     
     private final UserRepository repo;
     // inject JWT util if you have one
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository repo) {
+    public UserService(UserRepository repo, PasswordEncoder passwordEncoder) {
         this.repo = repo;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<User> findAllUsers() {
@@ -45,19 +49,23 @@ public class UserService {
         u.setPhone(in.getPhone());
         u.setAddress(in.getAddress());
         // remember to hash in.getPassword() in prod!
-        u.setPassword(in.getPassword());
+        String hashed = passwordEncoder.encode(in.getPassword());
+        u.setPassword(hashed);
         return repo.save(u);
     }
 
-    public AuthPayload login(String email, String password) {
+    public Boolean login(String email, String password) {
+        String hashedPassword = passwordEncoder.encode(password);
         User u = repo.findByEmail(email)
                      .orElseThrow(() -> new RuntimeException("No user"));
-        if (!u.getPassword().equals(password)) {
-            throw new RuntimeException("Bad credentials");
+        if (!passwordEncoder.matches(password, u.getPassword())) {
+            throw new RuntimeException("Bad credentials" + hashedPassword + " actual password " + u.getPassword());
         }
-        //String token = /* generate JWT for u */;
-        String token = "1234";
-        return new AuthPayload(token, u);
+        return true;
+        // String token = /* generate JWT for u */;
+        // String emailString = u.getEmail();
+        // String token = JwtTokenUtil.generateToken(emailString);
+        // return new AuthPayload(token, u);
     }
 
 }

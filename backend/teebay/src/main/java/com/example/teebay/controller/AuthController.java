@@ -1,6 +1,7 @@
 package com.example.teebay.controller;
 
 import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,20 +18,17 @@ import com.example.teebay.repository.UserRepository;
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
-    private final JwtTokenUtil jwtTokenUtil;
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final UserService userService;
 
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
     public AuthController(AuthenticationManager authenticationManager,
-                          JwtTokenUtil jwtTokenUtil,
                           UserRepository userRepository,
-                          PasswordEncoder passwordEncoder,
                           UserService userService) {
         this.authenticationManager = authenticationManager;
-        this.jwtTokenUtil = jwtTokenUtil;
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
         this.userService = userService;
     }
 
@@ -53,19 +51,26 @@ public class AuthController {
     // }
 
     // Login mutation: authenticate + return JWT
-    @MutationMapping("login")
-    public String login(@Argument String email, @Argument String password) {
-        Authentication auth = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(email, password)
-        );
-        // On success, auth.getPrincipal() is our UserDetails
-        String username = auth.getName();
-        return jwtTokenUtil.generateToken(username);
-    }
-
     // @MutationMapping("login")
-    // public AuthPayload login(@Argument String email, @Argument String password) {
-    //     return userService.login(email, password);
+    // public String login(@Argument String email, @Argument String password) {
+    //     Authentication auth = authenticationManager.authenticate(
+    //         new UsernamePasswordAuthenticationToken(email, password)
+    //     );
+    //     // On success, auth.getPrincipal() is our UserDetails
+    //     String username = auth.getName();
+    //     return jwtTokenUtil.generateToken(username);
     // }
+
+    @MutationMapping("login")
+    public AuthPayload login(@Argument String email, @Argument String password) {
+        if(userService.login(email, password)){
+            //String emailString = u.getEmail();
+            User u = userService.findByEmail(email);
+            String token = jwtTokenUtil.generateToken(email);
+            return new AuthPayload(token, u);
+        }else{
+            return new AuthPayload("failed",new User());
+        }
+    }
 
 }
