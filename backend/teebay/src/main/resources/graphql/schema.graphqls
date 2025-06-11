@@ -6,8 +6,6 @@ type User {
   phone: String
   address: String
   password: String!
-
-  # Added: list of products created by the user
   products: [Product]!
 }
 
@@ -42,8 +40,6 @@ type Product {
   description: String
   price: Float!
   summary: String
-
-  # Add the creator linkage
   createdBy: User!
 }
 
@@ -56,23 +52,29 @@ input ProductInput {
 }
 
 type Query {
+  #User Query
+
   allUsers: [User]!
 
-  # PRODUCT QUERIES
   
+
   allProducts: [Product]!
   productById(id: ID!): Product
+  # PRODUCT QUERIES
   myProducts: [Product]!
+  
 }
 
 type Mutation {
+  
   register(input: RegisterInput!): AuthPayload!
+  #User signUp Login
   login(email: String!, password: String!): AuthPayload!
 
-   # PRODUCT CRUD
-  
+   
   createProduct(input: ProductInput!): Product!
   updateProduct(id: ID!, input: ProductInput!): Product!
   deleteProduct(id: ID!): Boolean!
+  # PRODUCT CRUD
 
 }

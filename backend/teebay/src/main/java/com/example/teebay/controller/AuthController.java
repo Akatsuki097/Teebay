@@ -17,17 +17,15 @@ import com.example.teebay.repository.UserRepository;
 @Controller
 public class AuthController {
 
-    private final AuthenticationManager authenticationManager;
+    
     private final UserRepository userRepository;
     private final UserService userService;
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    public AuthController(AuthenticationManager authenticationManager,
-                          UserRepository userRepository,
+    public AuthController(UserRepository userRepository,
                           UserService userService) {
-        this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.userService = userService;
     }
@@ -39,27 +37,6 @@ public class AuthController {
         String token = jwtTokenUtil.generateToken(saved.getEmail());
         return new AuthPayload(token, saved);
     }
-
-    // // Register mutation (hash password before saving)
-    // @MutationMapping
-    // public String register(@Argument String email, @Argument String password) {
-    //     User u = new User();
-    //     u.setEmail(email);
-    //     u.setPassword(passwordEncoder.encode(password)); // ← hash password
-    //     userRepository.save(u);
-    //     return "User registered";
-    // }
-
-    // Login mutation: authenticate + return JWT
-    // @MutationMapping("login")
-    // public String login(@Argument String email, @Argument String password) {
-    //     Authentication auth = authenticationManager.authenticate(
-    //         new UsernamePasswordAuthenticationToken(email, password)
-    //     );
-    //     // On success, auth.getPrincipal() is our UserDetails
-    //     String username = auth.getName();
-    //     return jwtTokenUtil.generateToken(username);
-    // }
 
     @MutationMapping("login")
     public AuthPayload login(@Argument String email, @Argument String password) {

@@ -45,18 +45,6 @@ public class SecurityConfig {
       return http.build();
   }
 
-    // Expose AuthenticationManager so we can use it in our login controller
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http,
-            PasswordEncoder passwordEncoder,
-            com.example.teebay.security.UserDetailsServiceImpl userDetailsService) throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
-                   .userDetailsService(userDetailsService)
-                   .passwordEncoder(passwordEncoder)
-                   .and()
-                   .build();
-    }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(); // bcrypt for hashing user passwords
