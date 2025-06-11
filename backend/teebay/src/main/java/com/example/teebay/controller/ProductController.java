@@ -34,18 +34,19 @@ public class ProductController {
     public Product productById(@Argument Long id) {
         return productService.findById(id);
     }
+    
 
     @QueryMapping
-    public List<Product> myProducts(@AuthenticationPrincipal Principal principal) {
+    public List<Product> myProducts(@AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails user) {
         // Extract user ID or name from Principal (depends on your security setup)
         //Long userId = Long.parseLong(principal.getName());
-        User currUser = userService.findById(Integer.parseInt(principal.getName()));
+        User currUser = userService.findByEmail(user.getUsername());
         return currUser.getProducts();
     }
 
     @MutationMapping
-    public Product createProduct(@Argument ProductInput input , @AuthenticationPrincipal Principal principal) {
-        User currUser = userService.findById(Integer.parseInt(principal.getName()));
+    public Product createProduct(@Argument ProductInput input , @AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails user) {
+        User currUser = userService.findByEmail(user.getUsername());
         Product p = new Product();
         p.setTitle(input.title());
         p.setCategory(input.category());

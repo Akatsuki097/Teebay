@@ -27,17 +27,8 @@ public class UserController {
         return users != null ? users : Collections.emptyList();
     }
 
-    @MutationMapping("register")
-    public AuthPayload register(@Argument RegisterInput input) {
-        User saved = userService.register(input);
-        //String token = /* generate or fetch token */;
-        String token = "1234";
-        return new AuthPayload(token, saved);
-    }
+    
 
-    @MutationMapping("login")
-    public AuthPayload login(@Argument String email, @Argument String password) {
-        return userService.login(email, password);
-    }
+    
 }
 

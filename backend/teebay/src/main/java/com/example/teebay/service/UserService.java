@@ -31,6 +31,11 @@ public class UserService {
                    .orElseThrow(() -> new RuntimeException("User not found with id " + id));
     }
 
+    public User findByEmail(String userName) {
+        return repo.findByEmail(userName)
+                   .orElseThrow(() -> new RuntimeException("User not found with id " + userName));
+    }
+
     public User register(RegisterInput in) {
         // 1) Optional: check repo.findByEmail(in.getEmail()) → throw if exists
         User u = new User();
