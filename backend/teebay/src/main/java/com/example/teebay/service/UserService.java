@@ -26,6 +26,11 @@ public class UserService {
         return users != null ? users : Collections.emptyList();
     }
 
+    public User findById(Integer id) {
+        return repo.findById(id)
+                   .orElseThrow(() -> new RuntimeException("User not found with id " + id));
+    }
+
     public User register(RegisterInput in) {
         // 1) Optional: check repo.findByEmail(in.getEmail()) → throw if exists
         User u = new User();

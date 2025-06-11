@@ -1,5 +1,8 @@
 package com.example.teebay.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,4 +21,7 @@ public class User {
     private String password;
 
     // getters & setters...
+
+    @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL)
+    private List<Product> products = new ArrayList<>();
 }

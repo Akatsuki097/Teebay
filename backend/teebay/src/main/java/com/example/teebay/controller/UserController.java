@@ -9,7 +9,6 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.stereotype.Controller;
 import com.example.teebay.controller.RegisterInput;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
