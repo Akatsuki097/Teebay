@@ -6,8 +6,7 @@ function ProductForm({ initialData = {}, onSubmit }) {
     title: initialData.title || '',
     category: initialData.category || '',
     description: initialData.description || '',
-    price: initialData.price || '',
-    summary: initialData.summary || ''
+    price: initialData.price || ''
   });
 
   const nextStep = () => setStep(s => s + 1);
@@ -78,10 +77,15 @@ function ProductForm({ initialData = {}, onSubmit }) {
         </div>
       );
     case 5:
-      return (
+        const { title, category, description, price } = values;      return (
         <div>
-          <h3>Step 5: Summary</h3>
-          <textarea name="summary" value={values.summary} onChange={handleChange} />
+          <h3>Summary</h3>
+          <div className="p-4 border rounded bg-gray-50 space-y-2">
+              <div><strong>Title:</strong> {title}</div>
+              <div><strong>Category:</strong> {category}</div>
+              <div><strong>Description:</strong> {description}</div>
+              <div><strong>Price:</strong> ${price}</div>
+          </div>
           <button onClick={prevStep}>Back</button>
           <button onClick={() => onSubmit(values)}>Submit</button>
         </div>

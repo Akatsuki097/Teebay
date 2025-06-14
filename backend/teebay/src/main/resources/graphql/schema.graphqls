@@ -39,7 +39,6 @@ type Product {
   category: Category!
   description: String
   price: Float!
-  summary: String
   createdBy: User!
 }
 
@@ -48,7 +47,6 @@ input ProductInput {
   category: Category!
   description: String
   price: Float!
-  summary: String
 }
 
 type Query {

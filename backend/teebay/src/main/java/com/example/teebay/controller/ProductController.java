@@ -50,7 +50,6 @@ public class ProductController {
         p.setCategory(input.category());
         p.setDescription(input.description());
         p.setPrice(input.price());
-        p.setSummary(input.summary());
         p.setCreatedBy(currUser);
         return productService.save(p);
     }
@@ -62,7 +61,6 @@ public class ProductController {
         p.setCategory(input.category());
         p.setDescription(input.description());
         p.setPrice(input.price());
-        p.setSummary(input.summary());
         return productService.update(id, p);
     }
 
@@ -72,5 +70,5 @@ public class ProductController {
         return true;
     }
 
-    public record ProductInput(String title, Category category, String description, Double price, String summary) {}
+    public record ProductInput(String title, Category category, String description, Double price) {}
 }

@@ -5,7 +5,7 @@ function ProductItem({ product, onDelete, showDelete }) {
     <div className="product-item">
       <h4>{product.title} (${product.price})</h4>
       <p><i>{product.category}</i></p>
-      <p>{product.summary}</p>
+      <p>{product.description}</p>
       <Link to={`/products/${product.id}/edit`}><button>Edit</button></Link>
       {showDelete && <button onClick={onDelete}>Delete</button>}
     </div>

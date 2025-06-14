@@ -26,7 +26,6 @@ public class ProductService {
         prod.setCategory(data.getCategory());
         prod.setDescription(data.getDescription());
         prod.setPrice(data.getPrice());
-        prod.setSummary(data.getSummary());
         return repo.save(prod);
     }
     public void deleteById(Long id) {

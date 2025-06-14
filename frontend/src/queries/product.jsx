@@ -8,7 +8,6 @@ export const ALL_PRODUCTS_QUERY = gql`
       category
       description
       price
-      summary
       createdBy {
         id
         firstName
@@ -27,7 +26,6 @@ export const MY_PRODUCTS_QUERY = gql`
       category
       description
       price
-      summary
       createdBy {
         id
         firstName
@@ -46,7 +44,6 @@ export const GET_PRODUCT_QUERY = gql`
       category
       description
       price
-      summary
       createdBy {
         id
         firstName
@@ -65,7 +62,6 @@ export const CREATE_PRODUCT_MUTATION = gql`
       category
       description
       price
-      summary
       createdBy {
         id
         firstName
@@ -84,7 +80,6 @@ export const UPDATE_PRODUCT_MUTATION = gql`
       category
       description
       price
-      summary
       createdBy {
         id
         firstName

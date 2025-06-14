@@ -19,7 +19,6 @@ public class Product {
     private String description;
 
     private Double price;
-    private String summary;
 
     @ManyToOne
     @JoinColumn(name = "created_by_id", nullable = false)
