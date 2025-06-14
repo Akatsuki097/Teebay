@@ -15,7 +15,5 @@ public class RegisterInput {
     private String address;
     private String password;
 
-    public RegisterInput() {} // required no-args constructor
-
-    // Add getters and setters (or use Lombok @Data/@Getter/@Setter)
+    public RegisterInput() {}
 }

@@ -23,13 +23,9 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-      // 1) Disable CSRF (if you’re stateless / using JWT)
+    
       http.csrf(csrf -> csrf.disable());
 
-      // 2) Add your JWT filter before the username/password filter
-     // http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
-      // 3) Declare your authorization rules in one go
       http.authorizeHttpRequests(auth -> auth
           .requestMatchers(HttpMethod.GET,    "/graphql").permitAll()
           .requestMatchers(HttpMethod.OPTIONS,"/graphql").permitAll()
@@ -38,10 +34,8 @@ public class SecurityConfig {
           .anyRequest().permitAll()
       );
 
-      // 4) Enable basic auth (or remove if you only use JWT)
       http.httpBasic(Customizer.withDefaults());
 
-      // 5) Build and return the filter chain
       return http.build();
   }
 

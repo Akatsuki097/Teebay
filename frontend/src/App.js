@@ -3,29 +3,11 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import AllProductsPage from './pages/AllProductsPage'
+import MyProductsPage from './pages/MyProductsPage'
+import ProductFormPage from './pages/ProductFormPage'
+import EditProductPage    from './pages/EditProductPage'
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;
 
 export default function App() {
   return (
@@ -34,7 +16,21 @@ export default function App() {
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          
+          
+         
+        <Route path="/all-products" element={<AllProductsPage />} />
+        <Route path="/my-products" element={<MyProductsPage />} />
+
+        <Route path="/products/new" element={<ProductFormPage />} />
+        <Route 
+          path="/products/:id/edit" 
+          element={<EditProductPage/>} 
+        />
+          
           <Route path="*" element={<Navigate to="/login" replace />} />
+        
+        
         </Routes>
       </div>
     </Router>

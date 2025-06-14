@@ -17,7 +17,7 @@ import java.util.List;
 public class UserService {
     
     private final UserRepository repo;
-    // inject JWT util if you have one
+   
     private final PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository repo, PasswordEncoder passwordEncoder) {
@@ -26,7 +26,7 @@ public class UserService {
     }
 
     public List<User> findAllUsers() {
-        List<User> users = repo.findAll(); // This should already return an empty list, not null
+        List<User> users = repo.findAll(); 
         return users != null ? users : Collections.emptyList();
     }
 
@@ -41,14 +41,14 @@ public class UserService {
     }
 
     public User register(RegisterInput in) {
-        // 1) Optional: check repo.findByEmail(in.getEmail()) → throw if exists
+        
         User u = new User();
         u.setFirstName(in.getFirstName());
         u.setLastName(in.getLastName());
         u.setEmail(in.getEmail());
         u.setPhone(in.getPhone());
         u.setAddress(in.getAddress());
-        // remember to hash in.getPassword() in prod!
+        
         String hashed = passwordEncoder.encode(in.getPassword());
         u.setPassword(hashed);
         return repo.save(u);
@@ -62,10 +62,7 @@ public class UserService {
             throw new RuntimeException("Bad credentials" + hashedPassword + " actual password " + u.getPassword());
         }
         return true;
-        // String token = /* generate JWT for u */;
-        // String emailString = u.getEmail();
-        // String token = JwtTokenUtil.generateToken(emailString);
-        // return new AuthPayload(token, u);
+        
     }
 
 }

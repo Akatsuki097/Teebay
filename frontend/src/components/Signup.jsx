@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 
-// 1. Define the GraphQL REGISTER mutation
 const REGISTER_USER = gql`
   mutation Register($input: RegisterInput!) {
     register(input: $input) {
@@ -16,7 +15,6 @@ const REGISTER_USER = gql`
   }
 `;
 
-// 2. Query to get the current user for Apollo cache
 const GET_CURRENT_USER = gql`
   query GetCurrentUser {
     me {
@@ -29,7 +27,7 @@ const GET_CURRENT_USER = gql`
 `;
 
 export default function Signup() {
-  // React state hooks for each field
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -38,9 +36,9 @@ export default function Signup() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
-  // Register the mutation using Apollo's useMutation hook
+
   const [register, { loading }] = useMutation(REGISTER_USER, {
-    // 3a. Update Apollo cache with the new user
+
     update(cache, { data: { register } }) {
       const { user } = register;
       cache.writeQuery({
@@ -48,10 +46,10 @@ export default function Signup() {
         data: { me: user }
       });
     },
-    // 3b. On success, store token in localStorage
+
     onCompleted: ({ register }) => {
       localStorage.setItem('token', register.token);
-      // Optionally, redirect or clear form here
+   
     },
     onError: (err) => {
       setError(err.message);
@@ -61,7 +59,7 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // call the mutation with variables
+
     await register({
       variables: {
         input: { firstName, lastName, email, phone, address, password }
@@ -121,7 +119,7 @@ export default function Signup() {
             required
             className="w-full border p-2 rounded"
           />
-          {/* TODO: add show/hide toggle */}
+      
         </div>
         <button
           type="submit"

@@ -21,10 +21,6 @@ public class Product {
     private Double price;
     private String summary;
 
-    // // For simplicity, store owner/user ID; replace with @ManyToOne User if needed
-    // private Long ownerId;
-
-    // getters/setters, constructors omitted for brevity
     @ManyToOne
     @JoinColumn(name = "created_by_id", nullable = false)
     private User createdBy;

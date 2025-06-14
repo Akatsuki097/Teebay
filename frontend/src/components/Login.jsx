@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
+import { useNavigate, useParams } from 'react-router-dom'
 
-// Define the LOGIN mutation
 const LOGIN = gql`
   mutation Login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
@@ -16,7 +16,6 @@ const LOGIN = gql`
   }
 `;
 
-// Query to write the user into Apollo cache
 const GET_CURRENT_USER = gql`
   query GetCurrentUser {
     me {
@@ -29,6 +28,7 @@ const GET_CURRENT_USER = gql`
 `;
 
 export default function Login() {
+    const navigate = useNavigate() 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -43,7 +43,7 @@ export default function Login() {
     },
     onCompleted: ({ login }) => {
       localStorage.setItem('token', login.token);
-      // Optionally redirect or show success message
+      navigate('/my-products')
     },
     onError: (err) => {
       setError(err.message);

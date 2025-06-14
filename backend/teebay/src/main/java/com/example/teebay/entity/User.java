@@ -20,7 +20,6 @@ public class User {
     private String address;
     private String password;
 
-    // getters & setters...
 
     @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL)
     private List<Product> products = new ArrayList<>();

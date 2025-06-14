@@ -16,9 +16,7 @@ public class ProductService {
     public Product findById(Long id) {
         return repo.findById(id).orElseThrow();
     }
-    // public List<Product> findByOwnerId(Long ownerId) {
-    //     return repo.findByOwnerId(ownerId);
-    // }
+    
     public Product save(Product p) {
         return repo.save(p);
     }

@@ -41,7 +41,6 @@ public class AuthController {
     @MutationMapping("login")
     public AuthPayload login(@Argument String email, @Argument String password) {
         if(userService.login(email, password)){
-            //String emailString = u.getEmail();
             User u = userService.findByEmail(email);
             String token = jwtTokenUtil.generateToken(email);
             return new AuthPayload(token, u);

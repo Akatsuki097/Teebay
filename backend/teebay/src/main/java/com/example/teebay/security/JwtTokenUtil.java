@@ -25,14 +25,12 @@ public class JwtTokenUtil {
 
     @PostConstruct
     public void init() {
-        // Decode the Base64-encoded secret into bytes, then build the HMAC-SHA key
+        
         byte[] keyBytes = Decoders.BASE64.decode(base64Secret);
         this.signingKey = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    /**
-     * Generate a signed JWT with the given subject (e.g., userId or username).
-     */
+   
     public String generateToken(String subject) {
         Date now = new Date();
         Date expiry = new Date(now.getTime() + jwtExpirationMs);
@@ -45,10 +43,7 @@ public class JwtTokenUtil {
                 .compact();
     }
 
-    /**
-     * Extract and return the subject (e.g., userId) from the JWT.
-     * Returns null if token is invalid or expired.
-     */
+   
     public String extractSubject(String token) {
         try {
             return Jwts.parser()
@@ -62,9 +57,7 @@ public class JwtTokenUtil {
         }
     }
 
-    /**
-     * Validate the token expiration date.
-     */
+  
     public boolean isTokenValid(String token) {
         try {
             var claims = Jwts.parser()

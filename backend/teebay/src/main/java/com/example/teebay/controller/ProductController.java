@@ -38,8 +38,6 @@ public class ProductController {
 
     @QueryMapping
     public List<Product> myProducts(@AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails user) {
-        // Extract user ID or name from Principal (depends on your security setup)
-        //Long userId = Long.parseLong(principal.getName());
         User currUser = userService.findByEmail(user.getUsername());
         return currUser.getProducts();
     }
@@ -54,7 +52,6 @@ public class ProductController {
         p.setPrice(input.price());
         p.setSummary(input.summary());
         p.setCreatedBy(currUser);
-        // set ownerId from context if needed
         return productService.save(p);
     }
 
@@ -75,6 +72,5 @@ public class ProductController {
         return true;
     }
 
-    // GraphQL input type as a Java record (Spring GraphQL auto-maps fields)
     public record ProductInput(String title, Category category, String description, Double price, String summary) {}
 }

@@ -28,8 +28,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain chain) // ← uses jakarta.servlet.FilterChain
-                                    throws ServletException, IOException { // ← jakarta.servlet.ServletException
+                                    FilterChain chain)
+                                    throws ServletException, IOException { 
         String authHeader = request.getHeader("Authorization");
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
@@ -42,7 +42,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         null,
                         userDetails.getAuthorities()
                     );
-                // populate Spring Security context so @AuthenticationPrincipal works
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         }
