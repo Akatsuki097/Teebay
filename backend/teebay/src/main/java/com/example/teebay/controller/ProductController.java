@@ -4,6 +4,7 @@ import com.example.teebay.entity.Product;
 import com.example.teebay.entity.User;
 import com.example.teebay.entity.Category;
 import com.example.teebay.service.ProductService;
+import com.example.teebay.service.ProductService.UserActivity;
 import com.example.teebay.service.UserService;
 
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -26,8 +27,9 @@ public class ProductController {
     }
 
     @QueryMapping
-    public List<Product> allProducts() {
-        return productService.findAll();
+    public List<Product> allProducts(@AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails user) {
+        User me = userService.findByEmail(user.getUsername());
+        return productService.findAllExcludingOwner(me);
     }
 
     @QueryMapping
@@ -39,7 +41,7 @@ public class ProductController {
     @QueryMapping
     public List<Product> myProducts(@AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails user) {
         User currUser = userService.findByEmail(user.getUsername());
-        return currUser.getProducts();
+        return productService.findByCreatedBy(currUser);
     }
 
     @MutationMapping
@@ -55,20 +57,48 @@ public class ProductController {
     }
 
     @MutationMapping
-    public Product updateProduct(@Argument Long id, @Argument ProductInput input) {
+    public Product updateProduct(@Argument Long productId, @Argument ProductInput input) {
         Product p = new Product();
         p.setTitle(input.title());
         p.setCategory(input.category());
         p.setDescription(input.description());
         p.setPrice(input.price());
-        return productService.update(id, p);
+        return productService.update(productId, p);
     }
 
     @MutationMapping
-    public Boolean deleteProduct(@Argument Long id) {
-        productService.deleteById(id);
+    public Boolean deleteProduct(@Argument Long productId) {
+        productService.deleteById(productId);
         return true;
     }
 
+    @MutationMapping
+    public Product buyProduct(@Argument Long productId,
+                            @AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails userDetails) {
+        User buyer = userService.findByEmail(userDetails.getUsername());
+        return productService.buyProduct(productId, buyer);
+    }
+
+    @MutationMapping
+    public Product rentProduct(@Argument RentInput input,
+                            @AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails userDetails) {
+        User renter = userService.findByEmail(userDetails.getUsername());
+        return productService.rentProduct(input.productId(), input.days(), renter);
+    }
+
+    @MutationMapping
+    public Product returnProduct(@Argument Long productId,
+                                @AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails userDetails) {
+        User renter = userService.findByEmail(userDetails.getUsername());
+        return productService.returnProduct(productId, renter);
+    }
+
+    @QueryMapping
+    public UserActivity userActivity(@AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails userDetails) {
+        User user = userService.findByEmail(userDetails.getUsername());
+        return productService.getUserActivity(user);
+    }
+
     public record ProductInput(String title, Category category, String description, Double price) {}
+    public record RentInput(Long productId, int days) {}
 }

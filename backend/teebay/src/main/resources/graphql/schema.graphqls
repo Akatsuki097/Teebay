@@ -40,6 +40,14 @@ type Product {
   description: String
   price: Float!
   createdBy: User!
+  buyer: User
+  renter: User
+  rentalEndDate: String
+}
+
+input RentInput {
+  productId: ID!
+  days: Int!
 }
 
 input ProductInput {
@@ -49,9 +57,17 @@ input ProductInput {
   price: Float!
 }
 
-type Query {
-  #User Query
+type UserActivity {
+  bought: [Product]
+  sold: [Product]
+  borrowed: [Product]
+  lent: [Product]
+}
 
+type Query {
+
+  userActivity: UserActivity
+  #User Query
   allUsers: [User]!
 
   
@@ -71,8 +87,11 @@ type Mutation {
 
    
   createProduct(input: ProductInput!): Product!
-  updateProduct(id: ID!, input: ProductInput!): Product!
-  deleteProduct(id: ID!): Boolean!
+  updateProduct(productId: ID!, input: ProductInput!): Product!
+  deleteProduct(productId: ID!): Boolean!
+  buyProduct(productId: ID!): Product
+  rentProduct(input: RentInput!): Product
+  returnProduct(productId: ID!): Product
   # PRODUCT CRUD
 
 }

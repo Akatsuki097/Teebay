@@ -22,6 +22,7 @@ function MyProductsPage() {
           product={prod} 
           onDelete={() => deleteProduct({ variables: { id: prod.id } })} 
           showDelete={true}
+          showEdit={true}
         />
       ))}
     </div>

@@ -3,6 +3,7 @@ package com.example.teebay.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter@Setter
@@ -23,4 +24,10 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "created_by_id", nullable = false)
     private User createdBy;
+
+    @ManyToOne
+    private User buyer;       
+    @ManyToOne
+    private User renter;      
+    private LocalDateTime rentalEndDate; 
 }

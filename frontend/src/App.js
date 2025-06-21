@@ -7,6 +7,8 @@ import AllProductsPage from './pages/AllProductsPage'
 import MyProductsPage from './pages/MyProductsPage'
 import ProductFormPage from './pages/ProductFormPage'
 import EditProductPage    from './pages/EditProductPage'
+import ProductDetailPage from './pages/ProductDetailPage'
+import UserActivityPage from './pages/UserActivityPage'
 
 
 export default function App() {
@@ -17,10 +19,10 @@ export default function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           
-          
-         
-        <Route path="/all-products" element={<AllProductsPage />} />
+        <Route path="/products" element={<AllProductsPage />} />
+        <Route path="/products/:id" element={<ProductDetailPage />} />
         <Route path="/my-products" element={<MyProductsPage />} />
+        <Route path="/activity" element={<UserActivityPage />} />        
 
         <Route path="/products/new" element={<ProductFormPage />} />
         <Route 
