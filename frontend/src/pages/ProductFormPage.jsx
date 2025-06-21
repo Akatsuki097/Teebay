@@ -48,7 +48,7 @@ const [deleteProduct] = useMutation(DELETE_PRODUCT_MUTATION, {
 
   return (
     <div>
-      <h2>{isEdit ? 'Edit Product' : 'Add Product'}</h2>
+      <h2>{isEdit ? 'Edit Product' : ''}</h2>
       <ProductForm initialData={initialData} onSubmit={handleSubmit} />
     </div>
   );

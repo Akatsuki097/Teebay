@@ -1,6 +1,7 @@
 import React from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql, useMutation } from '@apollo/client';
 import ProductItem from '../components/ProductItem';
+import { useNavigate} from 'react-router-dom'
 
 const USER_ACTIVITY_QUERY = gql`
   query UserActivity {
@@ -40,15 +41,34 @@ const USER_ACTIVITY_QUERY = gql`
   }
 `;
 
+
+export const RETURN_PRODUCT_QUERY = gql`
+  mutation ReturnProduct($productId: ID!) {
+    returnProduct(productId: $productId) {
+      id
+      renter { id }
+    }
+  }
+`
+
 export default function UserActivityGridPage() {
   const { data, loading, error } = useQuery(USER_ACTIVITY_QUERY);
+  const navigate = useNavigate();
+  const [returnProduct] = useMutation(RETURN_PRODUCT_QUERY, {
+      refetchQueries: [{ query: USER_ACTIVITY_QUERY }],
+    });
+
+  const handleReturn = async (productId) => {
+    await returnProduct({ variables: { productId} });
+    navigate('/activity');
+  };
 
   if (loading) return <p>Loading your activity…</p>;
   if (error) return <p>Error: {error.message}</p>;
 
   const { bought, sold, borrowed, lent } = data.userActivity;
 
-   const sections = [
+  const sections = [
     { key: 'bought',   label: 'Bought',   items: bought },
     { key: 'sold',     label: 'Sold',     items: sold },
     { key: 'borrowed', label: 'Borrowed', items: borrowed },
@@ -71,7 +91,7 @@ export default function UserActivityGridPage() {
               {section.items.length > 0 ? (
                 <div className="space-y-4">
                   {section.items.map(prod => (
-                    <ProductItem key={prod.id} product={prod} />
+                    <ProductItem key={prod.id} product={prod} clickable={false}  onReturn={() => handleReturn(prod.id)} showReturn={section.key === 'borrowed'}/>
                   ))}
                 </div>
               ) : (

@@ -126,7 +126,7 @@ export default function Signup() {
           disabled={loading}
           className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
         >
-          {loading ? 'Signing Up...' : 'Sign Up'}
+          {loading ? 'Signing Up...' : 'Register'}
         </button>
       </form>
       <p className="mt-4 text-center text-sm">

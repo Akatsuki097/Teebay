@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import ProductItem from '../components/ProductItem';
+import { ALL_PRODUCTS_QUERY} from '../queries/product';
+
 
 // GraphQL queries & mutations
 const GET_PRODUCT = gql`
@@ -41,8 +43,13 @@ export default function ProductDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { data, loading, error } = useQuery(GET_PRODUCT, { variables: { id } });
-  const [buyProduct] = useMutation(BUY_PRODUCT);
-  const [rentProduct] = useMutation(RENT_PRODUCT);
+  const [buyProduct] = useMutation(BUY_PRODUCT, {
+      refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
+    }
+  );
+  const [rentProduct] = useMutation(RENT_PRODUCT, {
+      refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
+    });
   
   const [showBuyConfirm, setShowBuyConfirm] = useState(false);
   const [showRentModal, setShowRentModal] = useState(false);
@@ -58,6 +65,8 @@ export default function ProductDetailPage() {
     navigate('/products');
   };
 
+
+
   const handleRent = async () => {
     await rentProduct({ variables: { input: { productId: product.id, days: rentDays } } });
     navigate('/products');
@@ -65,7 +74,7 @@ export default function ProductDetailPage() {
 
   return (
     <div className="max-w-3xl mx-auto p-6">
-      <ProductItem product={product} showActions={false} />
+      <ProductItem product={product} showActions={false} clickable = {false}/>
       <div className="mt-4 flex space-x-4">
         <button
           className="bg-purple-600 text-white py-2 px-4 rounded"
