@@ -5,7 +5,6 @@ import ProductItem from '../components/ProductItem';
 import { ALL_PRODUCTS_QUERY} from '../queries/product';
 
 
-// GraphQL queries & mutations
 const GET_PRODUCT = gql`
   query GetProduct($id: ID!) {
     productById(id: $id) {
@@ -90,7 +89,7 @@ export default function ProductDetailPage() {
         </button>
       </div>
 
-      {/* Buy confirmation modal */}
+
       {showBuyConfirm && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
           <div className="bg-white p-6 rounded-lg w-96">
@@ -114,7 +113,7 @@ export default function ProductDetailPage() {
         </div>
       )}
 
-      {/* Rent modal */}
+
       {showRentModal && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
           <div className="bg-white p-6 rounded-lg w-96">

@@ -65,6 +65,7 @@ cd Teebay
    psql -U postgres -d teebay -f db/product.sql
    psql -U postgres -d teebay -f db/migrationUserProduct.sql
    psql -U postgres -d teebay -f db/drop_summary.sql
+   psql -U postgres -d teebay -f db/rent.sql
    ```
 
 ### Application Properties

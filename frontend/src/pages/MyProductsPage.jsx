@@ -16,7 +16,7 @@ export default function MyProductsPage() {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      {/* Header */}
+  
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-semibold">My Products</h2>
         <button
@@ -29,7 +29,7 @@ export default function MyProductsPage() {
         </button>
       </div>
 
-      {/* Products List */}
+     
       <div className="space-y-6">
   {data.myProducts.length > 0 ? (
     data.myProducts.map(product => (
@@ -40,7 +40,7 @@ export default function MyProductsPage() {
         onDelete={() => deleteProduct({ 
           variables: { productId: product.id } 
         })}
-        showEdit={true}  // Enable edit functionality
+        showEdit={true}  
         clickable={true}
       />
     ))
@@ -49,7 +49,7 @@ export default function MyProductsPage() {
         )}
       </div>
 
-      {/* Add Product Button */}
+      
       <div className="mt-8 text-center">
         <button
           className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded"

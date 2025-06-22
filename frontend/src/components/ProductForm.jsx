@@ -29,7 +29,6 @@ function ProductForm({ initialData = {}, onSubmit }) {
     else alert('Please fill required fields');
   };
 
-  // common wrapper styles
   const wrapper = 'max-w-md mx-auto bg-white rounded shadow-md';
   const body = 'p-6';
   const footer = 'bg-gray-100 border-t px-6 py-4 flex justify-between';

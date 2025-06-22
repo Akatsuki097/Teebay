@@ -79,7 +79,7 @@ export default function UserActivityGridPage() {
     <div className="max-w-6xl mx-auto p-6">
       <h2 className="text-2xl font-semibold mb-6">Bought / Sold / Borrowed / Lent</h2>
 
-      {/* Simplified grid container with fixed columns */}
+    
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {sections.map(section => (
           <div

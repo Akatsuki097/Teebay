@@ -30,8 +30,6 @@ export default function EditProductPage() {
   const [categories, setCategories] = useState([])
   const [description, setDescription] = useState('')
   const [price, setPrice]           = useState('')
-//   const [rent, setRent]             = useState('')
-//   const [rentUnit, setRentUnit]     = useState(RENT_UNITS[0])
 
  
   useEffect(() => {
@@ -41,8 +39,6 @@ export default function EditProductPage() {
       setCategories([p.category])
       setDescription(p.description || '')
       setPrice(p.price)
-    //   setRent(p.rent || '')
-    //   setRentUnit(p.rentUnit || RENT_UNITS[0])
     }
   }, [data])
 
@@ -67,8 +63,6 @@ export default function EditProductPage() {
           category: categories[0],
           description,
           price: parseFloat(price),
-        //   rent: parseFloat(rent),
-        //   rentUnit,
         },
       },
     })
@@ -110,7 +104,6 @@ export default function EditProductPage() {
           </select>
         </div>
 
-        {/* Description */}
         <div>
           <label className="block mb-1 font-medium">Description</label>
           <textarea
@@ -121,7 +114,7 @@ export default function EditProductPage() {
           />
         </div>
 
-        {/* Price & Rent */}
+    
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block mb-1 font-medium">Price</label>
@@ -146,13 +139,9 @@ export default function EditProductPage() {
               </span>
               <input
                 type="number"
-                // value={rent}
-                // onChange={e => setRent(e.target.value)}
                 className="w-full border px-3 py-2"
               />
               <select
-                // value={rentUnit}
-                //onChange={e => setRentUnit(e.target.value)}
                 className="border px-3 py-2 rounded-r"
               >
                 {RENT_UNITS.map(u => (
@@ -163,7 +152,6 @@ export default function EditProductPage() {
           </div>
         </div>
 
-        {/* Submit */}
         <div className="text-right">
           <button
             type="submit"

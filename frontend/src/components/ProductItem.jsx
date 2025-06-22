@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 function ProductItem({ product, onDelete, showDelete, showEdit, clickable = true, showReturn, onReturn }) {
-  // State for delete confirmation
+ 
   const [confirmOpen, setConfirmOpen] = useState(false);
   const navigate = useNavigate() 
   
@@ -38,18 +38,18 @@ function ProductItem({ product, onDelete, showDelete, showEdit, clickable = true
       className={`border rounded-lg p-4 ${
         clickable 
           ? 'hover:shadow-lg cursor-pointer' 
-          : 'cursor-default'  // Explicitly set default cursor
+          : 'cursor-default' 
       }`}
       onClick={clickable ? handleContainerClick : undefined}
     >
     <div className="product-item p-4">
-      {/* Title */}
+     
       <h4 className="text-xl font-bold mb-1">{product.title}</h4>
 
-      {/* Categories */}
+    
       <p className="text-gray-500 text-sm mb-1">Categories: {product.category}</p>
 
-      {/* Price & Rent */}
+
       <p className="text-gray-500 text-sm mb-4">
         Price: ${product.price}
         {product.rentalEndDate && (
@@ -57,10 +57,10 @@ function ProductItem({ product, onDelete, showDelete, showEdit, clickable = true
         )}
       </p>
 
-      {/* Description */}
+    
       <p className="text-gray-800 mb-4">{product.description}</p>
 
-      {/* Actions */}
+      
       <div className="flex space-x-4 text-sm">
         {showReturn && (
           <button onClick={handleReturnClick} className="text-red-600 hover:underline">
@@ -69,7 +69,7 @@ function ProductItem({ product, onDelete, showDelete, showEdit, clickable = true
         )}
       </div>
 
-      {/* Actions */}
+
       <div className="flex space-x-4 text-sm">
         {showDelete && (
           <button onClick={handleDeleteClick} className="text-red-600 hover:underline">
